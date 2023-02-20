@@ -4,14 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   
-  <title>Archives: 2023 | Zx1an博客</title>
+  <title>JavaScript中this指向问题 | Zx1an博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Zx1an博客">
-<meta property="og:url" content="http://example.com/archives/2023/index.html">
+  <meta name="description" content="前言面向对象语言中 this 表示当前对象的一个引用,但在 JavaScript 中 this 不是固定不变的，它会随着执行环境的改变而改变。 1. 全局作用域或者普通函数中 this 指向全局对象 window123&#x2F;&#x2F;直接打印var a &#x3D; 10;console.log(this.a)  10  1234567&#x2F;&#x2F;function声明函数var a &#x3D; 10;function bar() &amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript中this指向问题">
+<meta property="og:url" content="http://example.com/2023/02/21/JavaScript%E4%B8%ADthis%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Zx1an博客">
+<meta property="og:description" content="前言面向对象语言中 this 表示当前对象的一个引用,但在 JavaScript 中 this 不是固定不变的，它会随着执行环境的改变而改变。 1. 全局作用域或者普通函数中 this 指向全局对象 window123&#x2F;&#x2F;直接打印var a &#x3D; 10;console.log(this.a)  10  1234567&#x2F;&#x2F;function声明函数var a &#x3D; 10;function bar() &amp;#">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-20T16:12:42.476Z">
+<meta property="article:modified_time" content="2020-12-19T08:49:12.000Z">
 <meta property="article:author" content="zhuxiang">
+<meta property="article:tag" content="this">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Zx1an博客" type="application/atom+xml">
@@ -99,117 +104,108 @@
         <div class="line-big">
           <div class="xs9">
             <section class="margin">
+              <article class="margin" itemscope itemprop="blogPost">
+  
+  <ul class="bread bg-green bg-inverse" style="margin-bottom:0px;border-radius:0px">
+    
+    <li><a  href="/categories/JavaScript/">JavaScript</a></li>
+  </ul>
+  
+  <div class="panel" style="border-radius:0px">
+    
+      
+        <header class="panel-head">
+          
+  
+    <h3 itemprop="name">
+      JavaScript中this指向问题
+    </h3>
+  
+
+        </header>
+        
+          <div class="panel-body" itemprop="articleBody">
+            
+                      <div class="entry">
+                        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>面向对象语言中 this 表示当前对象的一个引用,但在 JavaScript 中 this 不是固定不变的，它会随着执行环境的改变而改变。</p>
+<h3 id="1-全局作用域或者普通函数中-this-指向全局对象-window"><a href="#1-全局作用域或者普通函数中-this-指向全局对象-window" class="headerlink" title="1. 全局作用域或者普通函数中 this 指向全局对象 window"></a>1. 全局作用域或者普通函数中 this 指向全局对象 window</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//直接打印</span><br><span class="line">var a = 10;</span><br><span class="line">console.log(this.a)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>10</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//function声明函数</span><br><span class="line">var a = 10;</span><br><span class="line">function bar() &#123;</span><br><span class="line">  var a = 20</span><br><span class="line">  console.log(this.a);</span><br><span class="line">&#125;</span><br><span class="line">bar();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>10</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//function声明函数赋给变量</span><br><span class="line">var a = 10;</span><br><span class="line">var bar = function () &#123;</span><br><span class="line">  var a = 20;</span><br><span class="line">  console.log(this.a);</span><br><span class="line">&#125;;</span><br><span class="line">bar();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>10</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//立即执行函数</span><br><span class="line">var a = 10;</span><br><span class="line">(function () &#123;</span><br><span class="line">  var a = 20;</span><br><span class="line">  console.log(this.a);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>10</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//定时器方法</span><br><span class="line">var a = 10;</span><br><span class="line">setInterval(function () &#123;</span><br><span class="line">    var a = 20</span><br><span class="line">  console.log(this.a);</span><br><span class="line">&#125;, 2000);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>10</p>
+</blockquote>
+<h3 id="2-方法调用中谁调用-this-指向谁"><a href="#2-方法调用中谁调用-this-指向谁" class="headerlink" title="2. 方法调用中谁调用 this 指向谁"></a>2. 方法调用中谁调用 this 指向谁</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//对象方法调用</span><br><span class="line">var a = 10;</span><br><span class="line">var person = &#123;</span><br><span class="line">  a: 20,</span><br><span class="line">  run: function () &#123;</span><br><span class="line">    console.log(this.a);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line">person.run();</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>20</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 事件绑定 --&gt;</span><br><span class="line">&lt;button type=&quot;button&quot;&gt;点我&lt;/button&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  var btn = document.querySelector(&quot;button&quot;);</span><br><span class="line">  btn.onclick = function () &#123;</span><br><span class="line">    console.log(this);</span><br><span class="line">  &#125;;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>&lt; button button button type&#x3D;”button”&gt;点我 &lt; &#x2F;button&gt;</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 事件监听 --&gt;</span><br><span class="line">&lt;button type=&quot;button&quot;&gt;点我&lt;/button&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  var btn = document.querySelector(&quot;button&quot;);</span><br><span class="line">  btn.addEventListener(&quot;click&quot;, function () &#123;</span><br><span class="line">    console.log(this);</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>&lt; button button button type&#x3D;”button”&gt;点我 &lt; &#x2F;button&gt;</p>
+</blockquote>
+<h3 id="3-在构造函数或者构造函数原型对象中-this-指向构造函数的实例"><a href="#3-在构造函数或者构造函数原型对象中-this-指向构造函数的实例" class="headerlink" title="3. 在构造函数或者构造函数原型对象中 this 指向构造函数的实例"></a>3. 在构造函数或者构造函数原型对象中 this 指向构造函数的实例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//不使用new指向window</span><br><span class="line">function Person(name) &#123;</span><br><span class="line">  console.log(this)     // window</span><br><span class="line">  this.name = name;</span><br><span class="line">&#125;</span><br><span class="line">Person(&#x27;inwe&#x27;)</span><br><span class="line">//使用new</span><br><span class="line">function Person(name) &#123;</span><br><span class="line">  this.name = name</span><br><span class="line">  console.log(this)     //people</span><br><span class="line">  self = this</span><br><span class="line">&#125;</span><br><span class="line">var people = new Person(&#x27;iwen&#x27;)</span><br><span class="line">console.log(self === people)       //true</span><br><span class="line">//这里new改变了this指向，将this由window指向Person的实例对象people</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>window<br>people<br>true</p>
+</blockquote>
+<h3 id="4-箭头函数中指向外层作用域的-this"><a href="#4-箭头函数中指向外层作用域的-this" class="headerlink" title="4. 箭头函数中指向外层作用域的 this"></a>4. 箭头函数中指向外层作用域的 this</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;</span><br><span class="line">  foo() &#123;</span><br><span class="line">    console.log(this);</span><br><span class="line">  &#125;,</span><br><span class="line">  bar: () =&gt; &#123;</span><br><span class="line">    console.log(this);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.foo()    // &#123;foo: ƒ, bar: ƒ&#125;</span><br><span class="line">obj.bar()    // window</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>{foo: ƒ, bar: ƒ}<br>window</p>
+</blockquote>
+
+                      </div>
+                      
+                      <!-- <div id="cyReward" class="text-center margin-top" role="cylabs" data-use="reward"></div> -->
+                        
+          </div>
+          <footer class="panel-foot clearfix">
+            
               
-  
-  
-    
-    
       
+          <a href="/tags/this/" class="tag bg-main padding-small">this</a>
       
-      <section class="panel margin">
-        <div class="panel-head">
-          <a href="/archives/2023" class="archive-year">2023</a>
-        </div>
-        <div class="panel-body">
+
+          </footer>
+  </div>
+  
     
-    <article class="clear-fix">
-        <h3><a class="float-right" href="/2023/02/21/JS%E4%B8%AD%E7%9A%84%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E7%A5%9E%E6%8B%B7%E8%B4%9D/">
-                <time datetime="2023-02-20T16:12:54.620Z" itemprop="datePublished">2023/2/21</time>
-        </a></h3>
+  <ul class="pager margin clearfix border-main">
+    
+      <li class="float-left">
+        <a href="/2023/02/21/JavaScript%E4%B8%AD%E6%95%B0%E7%BB%84%E7%9A%8430%E7%A7%8D%E6%96%B9%E6%B3%95/">
+            
+              JavaScript中数组的使用及方法
+                
+        </a>
+      </li>
+      
         
+          <li class="float-right">
+            <a href="/2023/02/18/hello-world/">
+                HOME
+            </a>
+          </li>
+          
+  </ul>
   
-    <h3 itemprop="name">
-      <a  href="/2023/02/21/JS%E4%B8%AD%E7%9A%84%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E7%A5%9E%E6%8B%B7%E8%B4%9D/">JS中的浅拷贝与深拷贝</a>
-    </h3>
-  
-
-        <hr class="bg-main" />
+      
 </article>
-  
-    
-    
-    <article class="clear-fix">
-        <h3><a class="float-right" href="/2023/02/21/js%E4%B8%AD%E9%81%8D%E5%8E%86%E6%95%B0%E7%BB%84%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">
-                <time datetime="2023-02-20T16:12:51.109Z" itemprop="datePublished">2023/2/21</time>
-        </a></h3>
-        
-  
-    <h3 itemprop="name">
-      <a  href="/2023/02/21/js%E4%B8%AD%E9%81%8D%E5%8E%86%E6%95%B0%E7%BB%84%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">js中遍历数组的几种方式</a>
-    </h3>
-  
-
-        <hr class="bg-main" />
-</article>
-  
-    
-    
-    <article class="clear-fix">
-        <h3><a class="float-right" href="/2023/02/21/js%E4%B8%AD%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">
-                <time datetime="2023-02-20T16:12:51.105Z" itemprop="datePublished">2023/2/21</time>
-        </a></h3>
-        
-  
-    <h3 itemprop="name">
-      <a  href="/2023/02/21/js%E4%B8%AD%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">js中遍历对象的几种方式</a>
-    </h3>
-  
-
-        <hr class="bg-main" />
-</article>
-  
-    
-    
-    <article class="clear-fix">
-        <h3><a class="float-right" href="/2023/02/21/JavaScript%E4%B8%AD%E6%95%B0%E7%BB%84%E7%9A%8430%E7%A7%8D%E6%96%B9%E6%B3%95/">
-                <time datetime="2023-02-20T16:12:42.480Z" itemprop="datePublished">2023/2/21</time>
-        </a></h3>
-        
-  
-    <h3 itemprop="name">
-      <a  href="/2023/02/21/JavaScript%E4%B8%AD%E6%95%B0%E7%BB%84%E7%9A%8430%E7%A7%8D%E6%96%B9%E6%B3%95/">JavaScript中数组的使用及方法</a>
-    </h3>
-  
-
-        <hr class="bg-main" />
-</article>
-  
-    
-    
-    <article class="clear-fix">
-        <h3><a class="float-right" href="/2023/02/21/JavaScript%E4%B8%ADthis%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98/">
-                <time datetime="2023-02-20T16:12:42.476Z" itemprop="datePublished">2023/2/21</time>
-        </a></h3>
-        
-  
-    <h3 itemprop="name">
-      <a  href="/2023/02/21/JavaScript%E4%B8%ADthis%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98/">JavaScript中this指向问题</a>
-    </h3>
-  
-
-        <hr class="bg-main" />
-</article>
-  
-    
-    
-    <article class="clear-fix">
-        <h3><a class="float-right" href="/2023/02/18/hello-world/">
-                <time datetime="2023-02-18T13:03:53.751Z" itemprop="datePublished">2023/2/18</time>
-        </a></h3>
-        
-  
-    <h3 itemprop="name">
-      <a  href="/2023/02/18/hello-world/">HOME</a>
-    </h3>
-  
-
-        <hr class="bg-main" />
-</article>
-  
-  
-    </div></section>
-  
-
 
 
             </section>

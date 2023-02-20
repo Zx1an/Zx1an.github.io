@@ -4,16 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   
-  <title>HOME | Zx1an博客</title>
+  <title>JS中的浅拷贝与深拷贝 | Zx1an博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="article">
-<meta property="og:title" content="HOME">
-<meta property="og:url" content="http://example.com/2023/02/18/hello-world/index.html">
+  <meta name="description" content="前言浅拷贝是拷贝一层，深层次的对象级别的就拷贝引用；深拷贝是拷贝多层，每一级别的数据都会拷贝出来；总结来看 :浅拷贝的时候如果数据是基本数据类型，那么就如同直接赋值那种，会拷贝其本身，如果除了基本数据类型之外还有一层对象，那么对于浅拷贝而言就只能拷贝其引用，对象的改变会反应到拷贝对象上；但是深拷贝就会拷贝多层，即使是嵌套了对象，也会都拷贝出来。 浅拷贝实现方式一123456var a &#x3D; &amp;#12">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JS中的浅拷贝与深拷贝">
+<meta property="og:url" content="http://example.com/2023/02/21/JS%E4%B8%AD%E7%9A%84%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E7%A5%9E%E6%8B%B7%E8%B4%9D/index.html">
 <meta property="og:site_name" content="Zx1an博客">
+<meta property="og:description" content="前言浅拷贝是拷贝一层，深层次的对象级别的就拷贝引用；深拷贝是拷贝多层，每一级别的数据都会拷贝出来；总结来看 :浅拷贝的时候如果数据是基本数据类型，那么就如同直接赋值那种，会拷贝其本身，如果除了基本数据类型之外还有一层对象，那么对于浅拷贝而言就只能拷贝其引用，对象的改变会反应到拷贝对象上；但是深拷贝就会拷贝多层，即使是嵌套了对象，也会都拷贝出来。 浅拷贝实现方式一123456var a &#x3D; &amp;#12">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2023-02-18T13:03:53.751Z">
-<meta property="article:modified_time" content="2023-02-19T10:41:02.968Z">
+<meta property="article:published_time" content="2023-02-20T16:12:54.620Z">
+<meta property="article:modified_time" content="2020-12-27T04:34:54.000Z">
 <meta property="article:author" content="zhuxiang">
+<meta property="article:tag" content="浅拷贝">
+<meta property="article:tag" content="深拷贝">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Zx1an博客" type="application/atom+xml">
@@ -103,6 +107,11 @@
             <section class="margin">
               <article class="margin" itemscope itemprop="blogPost">
   
+  <ul class="bread bg-green bg-inverse" style="margin-bottom:0px;border-radius:0px">
+    
+    <li><a  href="/categories/JavaScript/">JavaScript</a></li>
+  </ul>
+  
   <div class="panel" style="border-radius:0px">
     
       
@@ -110,7 +119,7 @@
           
   
     <h3 itemprop="name">
-      HOME
+      JS中的浅拷贝与深拷贝
     </h3>
   
 
@@ -119,7 +128,31 @@
           <div class="panel-body" itemprop="articleBody">
             
                       <div class="entry">
-                        
+                        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>浅拷贝是拷贝一层，深层次的对象级别的就拷贝引用；<br>深拷贝是拷贝多层，每一级别的数据都会拷贝出来；<br><strong>总结来看 :</strong><br>浅拷贝的时候如果数据是基本数据类型，那么就如同直接赋值那种，会拷贝其本身，如果除了基本数据类型之外还有一层对象，那么对于浅拷贝而言就只能拷贝其引用，对象的改变会反应到拷贝对象上；但是深拷贝就会拷贝多层，即使是嵌套了对象，也会都拷贝出来。</p>
+<h3 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h3><h4 id="实现方式一"><a href="#实现方式一" class="headerlink" title="实现方式一"></a>实现方式一</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var a = &#123;x : 1&#125;</span><br><span class="line">var b = a</span><br><span class="line">console.log(b)    // &#123;x:1&#125;</span><br><span class="line">b.x = 2</span><br><span class="line">console.log(a)   // &#123;x:2&#125;</span><br><span class="line">console.log(b)   // &#123;x:2&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="实现方式二"><a href="#实现方式二" class="headerlink" title="实现方式二"></a>实现方式二</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;</span><br><span class="line">    name: &quot;abc&quot;,</span><br><span class="line">    num: [1,2,3,4,5],</span><br><span class="line">  &#125;</span><br><span class="line">var obj1 = &#123;&#125;</span><br><span class="line">for (var prop in obj) &#123;       //用遍历的方式将 obj 的数据拷贝给 obj1</span><br><span class="line">    obj1[prop] = obj[prop]</span><br><span class="line">&#125;</span><br><span class="line">obj1.num[4] = 8</span><br><span class="line">console.log(obj.num[4])    //此时可以看见 obj 的数据也进行了改变    8</span><br></pre></td></tr></table></figure>
+<p><strong>上述案例可以看出:</strong> 浅拷贝是一个传址,也就是把 a 的值赋给 b 的时候同时也把 a 的址赋给了 b,当 a || b 的值改变的时候， a || b 的值也同时会改变, 实现浅拷贝的方法很多，这里不多讲，在来看看重点深拷贝</p>
+<h3 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h3><h4 id="实现方式一-1"><a href="#实现方式一-1" class="headerlink" title="实现方式一"></a>实现方式一</h4><p><strong>使用递归复制所有层级属性</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function deepClone(obj) &#123;</span><br><span class="line">  let objClone = Array.isArray(obj) ? [] : &#123;&#125;;</span><br><span class="line">  if (obj &amp;&amp; typeof obj === &quot;object&quot;) &#123;</span><br><span class="line">    for (let key in obj) &#123;</span><br><span class="line">      if (obj.hasOwnProperty(key)) &#123;</span><br><span class="line">        // 判断obj子元素是否为对象，如果是，递归复制</span><br><span class="line">        if (obj[key] &amp;&amp; typeof obj[key] === &quot;object&quot;) &#123;</span><br><span class="line">          objClone[key] = deepClone(obj[key]);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">          objClone[key] = obj[key];</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return objClone;</span><br><span class="line">&#125;</span><br><span class="line">let a = [1, 2, 3, 4, [5, 6]];</span><br><span class="line">let b = deepClone(a); </span><br><span class="line">a[4][0] = 0;</span><br><span class="line">console.log(a);  // [1, 2, 3, 4, [0, 6]]</span><br><span class="line">console.log(b);  // [1, 2, 3, 4, [5, 6]]</span><br></pre></td></tr></table></figure>
+<h4 id="实现方式二-1"><a href="#实现方式二-1" class="headerlink" title="实现方式二"></a>实现方式二</h4><p><strong>通过 JSON 对象实现深拷贝</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function deepClone (obj) &#123;</span><br><span class="line">  let _obj = JSON.stringify(obj)</span><br><span class="line">  let objClone = JSON.parse(_obj)</span><br><span class="line">  return objClone</span><br><span class="line">&#125;</span><br><span class="line">let a = [0,1,[2,3],4]</span><br><span class="line">let b = deepClone(a)</span><br><span class="line">a[0] = 1  </span><br><span class="line">a[2][0] = 1</span><br><span class="line">console.log(a)  // [1,1,[1,3],4]</span><br><span class="line">console.log(b)  // [0,1,[2,3],4]</span><br></pre></td></tr></table></figure>
+<h4 id="实现方式三"><a href="#实现方式三" class="headerlink" title="实现方式三"></a>实现方式三</h4><p><strong>使用 JQ 的 extend 方法</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.extend([deep ], target, object1 [, objectN ])</span><br></pre></td></tr></table></figure>
+<p>deep表示是否深拷贝，为true为深拷贝；为false，为浅拷贝。</p>
+<p>target Object类型 目标对象，其他对象的成员属性将被附加到该对象上。</p>
+<p>object1  objectN可选。 Object类型 第一个以及第N个被合并的对象。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let a = [0,1,[2,3],4]</span><br><span class="line">let b = $.extend(true, [], a)</span><br><span class="line">a[0] = 1</span><br><span class="line">a[2][0] = 1</span><br><span class="line">console.log(a)  // [1,1,[1,3],4]</span><br><span class="line">console.log(b)  // [0,1,[2,3],4]</span><br></pre></td></tr></table></figure>
+<p><strong>以上几种方法可完全实现深度拷贝，下面还有几种是不完全实现深度拷贝</strong></p>
+<h3 id="浅深拷贝"><a href="#浅深拷贝" class="headerlink" title="浅深拷贝"></a>浅深拷贝</h3><p><strong>当对象中只有一级属性，没有二级属性的时候，此方法为深拷贝，但是对象中有对象的时候，此方法，在二级属性以后就是浅拷贝。</strong></p>
+<h4 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h4><p><strong>使用扩展运算符实现深拷贝</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123; a: 1,b: &#123;c:2&#125;&#125;</span><br><span class="line">var newObj = &#123; ...obj &#125;</span><br><span class="line">obj.a = 2</span><br><span class="line">obj.b.c = 0</span><br><span class="line">console.log(obj);     // &#123; a: 2,b: &#123;c:0&#125;&#125;</span><br><span class="line">console.log(newObj)   // &#123; a: 1,b: &#123;c:0&#125;&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="方式二"><a href="#方式二" class="headerlink" title="方式二"></a>方式二</h4><p><strong>数组中 slice 方法</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let a = [0,1,[2,3],4]</span><br><span class="line">let b = a.slice()</span><br><span class="line">a[0] = 1</span><br><span class="line">a[2][0] = 1</span><br><span class="line">console.log(a)  // [1,1,[1,3],4]</span><br><span class="line">console.log(b)  // [0,1,[1,3],4]</span><br></pre></td></tr></table></figure>
+<p><strong>同理数组中的 concat 方法也会实现上述情况</strong></p>
+<h4 id="方式三"><a href="#方式三" class="headerlink" title="方式三"></a>方式三</h4><p><strong>通过使用 Object.assign() 实现</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const objA = &#123; a: 1, b: &#123; c: 2 &#125; &#125;;</span><br><span class="line">const objB = &#123; name: &quot;xixi&quot; &#125;;</span><br><span class="line">const obj = Object.assign(&#123;&#125;,objA, objB);</span><br><span class="line">objA.a = 2;</span><br><span class="line">objA.b.c = 3;</span><br><span class="line">objB.name = &quot;haha&quot;;</span><br><span class="line">console.log(objA);  //  &#123; a: 2, b: &#123; c: 3 &#125; &#125;;</span><br><span class="line">console.log(objB);  //   &#123; name: &quot;haha&quot; &#125;;</span><br><span class="line">console.log(obj);   // &#123; a: 1, b: &#123; c: 3 &#125;, name : &quot;xixi&quot; &#125;;</span><br></pre></td></tr></table></figure>
+
+
                       </div>
                       
                       <!-- <div id="cyReward" class="text-center margin-top" role="cylabs" data-use="reward"></div> -->
@@ -128,21 +161,25 @@
           <footer class="panel-foot clearfix">
             
               
+      
+          <a href="/tags/浅拷贝/" class="tag bg-main padding-small">浅拷贝</a>
+      
+          <a href="/tags/深拷贝/" class="tag bg-main padding-small">深拷贝</a>
+      
+
           </footer>
   </div>
   
     
   <ul class="pager margin clearfix border-main">
     
-      <li class="float-left">
-        <a href="/2023/02/21/JavaScript%E4%B8%ADthis%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98/">
-            
-              JavaScript中this指向问题
-                
-        </a>
-      </li>
-      
         
+          <li class="float-right">
+            <a href="/2023/02/21/js%E4%B8%AD%E9%81%8D%E5%8E%86%E6%95%B0%E7%BB%84%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">
+                js中遍历数组的几种方式
+            </a>
+          </li>
+          
   </ul>
   
       

@@ -4,14 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   
-  <title>Zx1an博客</title>
+  <title>JavaScript中数组的使用及方法 | Zx1an博客</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Zx1an博客">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="前言什么是数组数组对象是使用单独的变量名来存储一系列的值。简单意思就是普通变量一次只能储存一个值，数组可以储存多个值如果你有一组数据（例如：车名字），存在单独变量如下所示: 123var car1&#x3D;&quot;奔驰&quot;;var car2&#x3D;&quot;奥迪&quot;;var car3&#x3D;&quot;宝马&quot;; 创建数组创建一个数组有3种方式方式一 : 常规方式 1234var myC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript中数组的使用及方法">
+<meta property="og:url" content="http://example.com/2023/02/21/JavaScript%E4%B8%AD%E6%95%B0%E7%BB%84%E7%9A%8430%E7%A7%8D%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="Zx1an博客">
+<meta property="og:description" content="前言什么是数组数组对象是使用单独的变量名来存储一系列的值。简单意思就是普通变量一次只能储存一个值，数组可以储存多个值如果你有一组数据（例如：车名字），存在单独变量如下所示: 123var car1&#x3D;&quot;奔驰&quot;;var car2&#x3D;&quot;奥迪&quot;;var car3&#x3D;&quot;宝马&quot;; 创建数组创建一个数组有3种方式方式一 : 常规方式 1234var myC">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-20T16:12:42.480Z">
+<meta property="article:modified_time" content="2020-12-12T16:25:52.000Z">
 <meta property="article:author" content="zhuxiang">
+<meta property="article:tag" content="数组">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternate" href="/atom.xml" title="Zx1an博客" type="application/atom+xml">
@@ -99,9 +104,7 @@
         <div class="line-big">
           <div class="xs9">
             <section class="margin">
-              
-  
-    <article class="margin" itemscope itemprop="blogPost">
+              <article class="margin" itemscope itemprop="blogPost">
   
   <ul class="bread bg-green bg-inverse" style="margin-bottom:0px;border-radius:0px">
     
@@ -115,191 +118,7 @@
           
   
     <h3 itemprop="name">
-      <a  href="/2023/02/21/JS%E4%B8%AD%E7%9A%84%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%92%8C%E7%A5%9E%E6%8B%B7%E8%B4%9D/">JS中的浅拷贝与深拷贝</a>
-    </h3>
-  
-
-        </header>
-        
-          <div class="panel-body" itemprop="articleBody">
-            
-                      <div class="entry">
-                        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>浅拷贝是拷贝一层，深层次的对象级别的就拷贝引用；<br>深拷贝是拷贝多层，每一级别的数据都会拷贝出来；<br><strong>总结来看 :</strong><br>浅拷贝的时候如果数据是基本数据类型，那么就如同直接赋值那种，会拷贝其本身，如果除了基本数据类型之外还有一层对象，那么对于浅拷贝而言就只能拷贝其引用，对象的改变会反应到拷贝对象上；但是深拷贝就会拷贝多层，即使是嵌套了对象，也会都拷贝出来。</p>
-<h3 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h3><h4 id="实现方式一"><a href="#实现方式一" class="headerlink" title="实现方式一"></a>实现方式一</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var a = &#123;x : 1&#125;</span><br><span class="line">var b = a</span><br><span class="line">console.log(b)    // &#123;x:1&#125;</span><br><span class="line">b.x = 2</span><br><span class="line">console.log(a)   // &#123;x:2&#125;</span><br><span class="line">console.log(b)   // &#123;x:2&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="实现方式二"><a href="#实现方式二" class="headerlink" title="实现方式二"></a>实现方式二</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;</span><br><span class="line">    name: &quot;abc&quot;,</span><br><span class="line">    num: [1,2,3,4,5],</span><br><span class="line">  &#125;</span><br><span class="line">var obj1 = &#123;&#125;</span><br><span class="line">for (var prop in obj) &#123;       //用遍历的方式将 obj 的数据拷贝给 obj1</span><br><span class="line">    obj1[prop] = obj[prop]</span><br><span class="line">&#125;</span><br><span class="line">obj1.num[4] = 8</span><br><span class="line">console.log(obj.num[4])    //此时可以看见 obj 的数据也进行了改变    8</span><br></pre></td></tr></table></figure>
-<p><strong>上述案例可以看出:</strong> 浅拷贝是一个传址,也就是把 a 的值赋给 b 的时候同时也把 a 的址赋给了 b,当 a || b 的值改变的时候， a || b 的值也同时会改变, 实现浅拷贝的方法很多，这里不多讲，在来看看重点深拷贝</p>
-<h3 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h3><h4 id="实现方式一-1"><a href="#实现方式一-1" class="headerlink" title="实现方式一"></a>实现方式一</h4><p><strong>使用递归复制所有层级属性</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function deepClone(obj) &#123;</span><br><span class="line">  let objClone = Array.isArray(obj) ? [] : &#123;&#125;;</span><br><span class="line">  if (obj &amp;&amp; typeof obj === &quot;object&quot;) &#123;</span><br><span class="line">    for (let key in obj) &#123;</span><br><span class="line">      if (obj.hasOwnProperty(key)) &#123;</span><br><span class="line">        // 判断obj子元素是否为对象，如果是，递归复制</span><br><span class="line">        if (obj[key] &amp;&amp; typeof obj[key] === &quot;object&quot;) &#123;</span><br><span class="line">          objClone[key] = deepClone(obj[key]);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">          objClone[key] = obj[key];</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  return objClone;</span><br><span class="line">&#125;</span><br><span class="line">let a = [1, 2, 3, 4, [5, 6]];</span><br><span class="line">let b = deepClone(a); </span><br><span class="line">a[4][0] = 0;</span><br><span class="line">console.log(a);  // [1, 2, 3, 4, [0, 6]]</span><br><span class="line">console.log(b);  // [1, 2, 3, 4, [5, 6]]</span><br></pre></td></tr></table></figure>
-<h4 id="实现方式二-1"><a href="#实现方式二-1" class="headerlink" title="实现方式二"></a>实现方式二</h4><p><strong>通过 JSON 对象实现深拷贝</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">function deepClone (obj) &#123;</span><br><span class="line">  let _obj = JSON.stringify(obj)</span><br><span class="line">  let objClone = JSON.parse(_obj)</span><br><span class="line">  return objClone</span><br><span class="line">&#125;</span><br><span class="line">let a = [0,1,[2,3],4]</span><br><span class="line">let b = deepClone(a)</span><br><span class="line">a[0] = 1  </span><br><span class="line">a[2][0] = 1</span><br><span class="line">console.log(a)  // [1,1,[1,3],4]</span><br><span class="line">console.log(b)  // [0,1,[2,3],4]</span><br></pre></td></tr></table></figure>
-<h4 id="实现方式三"><a href="#实现方式三" class="headerlink" title="实现方式三"></a>实现方式三</h4><p><strong>使用 JQ 的 extend 方法</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$.extend([deep ], target, object1 [, objectN ])</span><br></pre></td></tr></table></figure>
-<p>deep表示是否深拷贝，为true为深拷贝；为false，为浅拷贝。</p>
-<p>target Object类型 目标对象，其他对象的成员属性将被附加到该对象上。</p>
-<p>object1  objectN可选。 Object类型 第一个以及第N个被合并的对象。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let a = [0,1,[2,3],4]</span><br><span class="line">let b = $.extend(true, [], a)</span><br><span class="line">a[0] = 1</span><br><span class="line">a[2][0] = 1</span><br><span class="line">console.log(a)  // [1,1,[1,3],4]</span><br><span class="line">console.log(b)  // [0,1,[2,3],4]</span><br></pre></td></tr></table></figure>
-<p><strong>以上几种方法可完全实现深度拷贝，下面还有几种是不完全实现深度拷贝</strong></p>
-<h3 id="浅深拷贝"><a href="#浅深拷贝" class="headerlink" title="浅深拷贝"></a>浅深拷贝</h3><p><strong>当对象中只有一级属性，没有二级属性的时候，此方法为深拷贝，但是对象中有对象的时候，此方法，在二级属性以后就是浅拷贝。</strong></p>
-<h4 id="方式一"><a href="#方式一" class="headerlink" title="方式一"></a>方式一</h4><p><strong>使用扩展运算符实现深拷贝</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123; a: 1,b: &#123;c:2&#125;&#125;</span><br><span class="line">var newObj = &#123; ...obj &#125;</span><br><span class="line">obj.a = 2</span><br><span class="line">obj.b.c = 0</span><br><span class="line">console.log(obj);     // &#123; a: 2,b: &#123;c:0&#125;&#125;</span><br><span class="line">console.log(newObj)   // &#123; a: 1,b: &#123;c:0&#125;&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="方式二"><a href="#方式二" class="headerlink" title="方式二"></a>方式二</h4><p><strong>数组中 slice 方法</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let a = [0,1,[2,3],4]</span><br><span class="line">let b = a.slice()</span><br><span class="line">a[0] = 1</span><br><span class="line">a[2][0] = 1</span><br><span class="line">console.log(a)  // [1,1,[1,3],4]</span><br><span class="line">console.log(b)  // [0,1,[1,3],4]</span><br></pre></td></tr></table></figure>
-<p><strong>同理数组中的 concat 方法也会实现上述情况</strong></p>
-<h4 id="方式三"><a href="#方式三" class="headerlink" title="方式三"></a>方式三</h4><p><strong>通过使用 Object.assign() 实现</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">const objA = &#123; a: 1, b: &#123; c: 2 &#125; &#125;;</span><br><span class="line">const objB = &#123; name: &quot;xixi&quot; &#125;;</span><br><span class="line">const obj = Object.assign(&#123;&#125;,objA, objB);</span><br><span class="line">objA.a = 2;</span><br><span class="line">objA.b.c = 3;</span><br><span class="line">objB.name = &quot;haha&quot;;</span><br><span class="line">console.log(objA);  //  &#123; a: 2, b: &#123; c: 3 &#125; &#125;;</span><br><span class="line">console.log(objB);  //   &#123; name: &quot;haha&quot; &#125;;</span><br><span class="line">console.log(obj);   // &#123; a: 1, b: &#123; c: 3 &#125;, name : &quot;xixi&quot; &#125;;</span><br></pre></td></tr></table></figure>
-
-
-                      </div>
-                      
-                      <!-- <div id="cyReward" class="text-center margin-top" role="cylabs" data-use="reward"></div> -->
-                        
-          </div>
-          <footer class="panel-foot clearfix">
-            
-              
-      
-          <a href="/tags/浅拷贝/" class="tag bg-main padding-small">浅拷贝</a>
-      
-          <a href="/tags/深拷贝/" class="tag bg-main padding-small">深拷贝</a>
-      
-
-          </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article class="margin" itemscope itemprop="blogPost">
-  
-  <ul class="bread bg-green bg-inverse" style="margin-bottom:0px;border-radius:0px">
-    
-    <li><a  href="/categories/JavaScript/">JavaScript</a></li>
-  </ul>
-  
-  <div class="panel" style="border-radius:0px">
-    
-      
-        <header class="panel-head">
-          
-  
-    <h3 itemprop="name">
-      <a  href="/2023/02/21/js%E4%B8%AD%E9%81%8D%E5%8E%86%E6%95%B0%E7%BB%84%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">js中遍历数组的几种方式</a>
-    </h3>
-  
-
-        </header>
-        
-          <div class="panel-body" itemprop="articleBody">
-            
-                      <div class="entry">
-                        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>JS数组遍历，基本就是for,for in,forEach,for of,map等等一些方法，以下介绍几种本文分析用到的数组遍历方式</p>
-<h3 id="第一种-普通for循环"><a href="#第一种-普通for循环" class="headerlink" title="第一种: 普通for循环"></a>第一种: 普通for循环</h3><p>最简单的一种，也是使用频率最高的一种，虽然性能不弱，但仍有优化空间</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> arr = [<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;banana&quot;</span>, <span class="string">&quot;watermelon&quot;</span>, <span class="string">&quot;pear&quot;</span>];</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; arr.<span class="property">length</span>; i++) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(i)         <span class="comment">// 0 1 2 3</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(arr[i])    <span class="comment">// apple banana watermelon pear</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="第二种-优化版for循环"><a href="#第二种-优化版for循环" class="headerlink" title="第二种: 优化版for循环"></a>第二种: 优化版for循环</h3><p>使用临时变量，将长度缓存起来，避免重复获取数组长度，当数组较大时优化效果才会比较明显<br>这种方法基本上是所有循环遍历方法中性能最高的一种</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let arr = [&quot;apple&quot;, &quot;banana&quot;, &quot;watermelon&quot;, &quot;pear&quot;];</span><br><span class="line">for(let i = 0, len = arr.length; i &lt; len; i++) &#123;</span><br><span class="line">  console.log(i)         // 0 1 2 3</span><br><span class="line">  console.log(arr[i])    // apple banana watermelon pear</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="第三种-弱化版for循环"><a href="#第三种-弱化版for循环" class="headerlink" title="第三种: 弱化版for循环"></a>第三种: 弱化版for循环</h3><p>这种方法其实严格上也属于for循环，只不过是没有使用length判断，而使用变量本身判断</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let arr = [&quot;apple&quot;, &quot;banana&quot;, &quot;watermelon&quot;, &quot;pear&quot;];</span><br><span class="line">for (let i = 0; arr[i] != null; i++) &#123;</span><br><span class="line">  console.log(i);        // 0 1 2 3</span><br><span class="line">  console.log(arr[i]);   // apple banana watermelon pear</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="第四种-forEach循环"><a href="#第四种-forEach循环" class="headerlink" title="第四种: forEach循环"></a>第四种: forEach循环</h3><p>数组自带的forEach循环，使用频率较高，实际上性能比普通for循环弱</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">let arr = [&quot;apple&quot;, &quot;banana&quot;, &quot;watermelon&quot;, &quot;pear&quot;];</span><br><span class="line">arr.forEach((item, index, arr) =&gt; &#123;</span><br><span class="line">  console.log(item);    // apple banana watermelon pear</span><br><span class="line">  console.log(index);   // 0 1 2 3</span><br><span class="line">  console.log(arr);     // 数组本身</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="第五种-forEach变种"><a href="#第五种-forEach变种" class="headerlink" title="第五种: forEach变种"></a>第五种: forEach变种</h3><p>由于forEach是Array型自带的，对于一些非这种类型的，无法直接使用(如NodeList)，所以才有了这个变种，使用这个变种可以让类似的数组拥有forEach功能。<br>实际性能要比普通forEach弱</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let arr = [&quot;apple&quot;, &quot;banana&quot;, &quot;watermelon&quot;, &quot;pear&quot;];</span><br><span class="line">Array.prototype.forEach.call(arr, (item, index) =&gt; &#123;</span><br><span class="line">  console.log(item);    // apple banana watermelon pear</span><br><span class="line">  console.log(index);   // 0 1 2 3</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="第六种-for-in循环"><a href="#第六种-for-in循环" class="headerlink" title="第六种: for in循环"></a>第六种: for in循环</h3><p>这个循环很多人爱用，但实际上，经分析测试，在众多的循环遍历方式中它的效率是最低的</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let arr = [&quot;apple&quot;, &quot;banana&quot;, &quot;watermelon&quot;, &quot;pear&quot;];</span><br><span class="line">for (let i in arr) &#123;</span><br><span class="line">  console.log(i);       // 0 1 2 3</span><br><span class="line">  console.log(arr[i]);  // apple banana watermelon pear</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="第七种-map遍历"><a href="#第七种-map遍历" class="headerlink" title="第七种: map遍历"></a>第七种: map遍历</h3><p>这种方式也是用的比较广泛的，虽然用起来比较优雅，但实际效率还比不上forEach</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let arr = [&quot;apple&quot;, &quot;banana&quot;, &quot;watermelon&quot;, &quot;pear&quot;];</span><br><span class="line">arr.map((item, index) =&gt; &#123;</span><br><span class="line">  console.log(item);    // apple banana watermelon pear</span><br><span class="line">  console.log(index);   // 0 1 2 3</span><br><span class="line">&#125;); </span><br></pre></td></tr></table></figure>
-<h3 id="第八种-for-of遍历-需要ES6支持"><a href="#第八种-for-of遍历-需要ES6支持" class="headerlink" title="第八种: for of遍历(需要ES6支持)"></a>第八种: for of遍历(需要ES6支持)</h3><p>这种方式是es6里面用到的，性能要好于for in，但仍然比不上普通for循环</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let arr = [&quot;apple&quot;, &quot;banana&quot;, &quot;watermelon&quot;, &quot;pear&quot;];</span><br><span class="line">for (let value of arr) &#123;</span><br><span class="line">  console.log(value);  // apple banana watermelon pear</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="各种遍历方式的性能对比"><a href="#各种遍历方式的性能对比" class="headerlink" title="各种遍历方式的性能对比"></a>各种遍历方式的性能对比</h3><p>以下截图数据是，在chrome (支持es6)中运行了1000次后得出的结论(每次运行100次,一共10个循环，得到的分析结果) </p>
-<div  align="center">    
-<img src="https://gitee.com/zuo_jiahui/blogimage/raw/master/img/6361fb0c77ece9ce732852ee1699d60.png" width = 100% height = 100% />
-</div> 
-
-                      </div>
-                      
-                      <!-- <div id="cyReward" class="text-center margin-top" role="cylabs" data-use="reward"></div> -->
-                        
-          </div>
-          <footer class="panel-foot clearfix">
-            
-              
-      
-          <a href="/tags/数组/" class="tag bg-main padding-small">数组</a>
-      
-
-          </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article class="margin" itemscope itemprop="blogPost">
-  
-  <ul class="bread bg-green bg-inverse" style="margin-bottom:0px;border-radius:0px">
-    
-    <li><a  href="/categories/JavaScript/">JavaScript</a></li>
-  </ul>
-  
-  <div class="panel" style="border-radius:0px">
-    
-      
-        <header class="panel-head">
-          
-  
-    <h3 itemprop="name">
-      <a  href="/2023/02/21/js%E4%B8%AD%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">js中遍历对象的几种方式</a>
-    </h3>
-  
-
-        </header>
-        
-          <div class="panel-body" itemprop="articleBody">
-            
-                      <div class="entry">
-                        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>这篇文章主要介绍了JS中5种遍历对象的方式<br>我们知道，在js的对象中，有下面几种属性:</p>
-<ul>
-<li>可枚举属性</li>
-<li>不可枚举属性</li>
-<li>从原型链上继承的属性</li>
-<li>以Symbol作为key值</li>
-</ul>
-<h4 id="枚举是什么"><a href="#枚举是什么" class="headerlink" title="枚举是什么"></a>枚举是什么</h4><p>枚举是指对象中的属性是否可以遍历出来，再简单点说就是属性是否可以列举出来</p>
-
-                      </div>
-                      
-                      <!-- <div id="cyReward" class="text-center margin-top" role="cylabs" data-use="reward"></div> -->
-                        
-          </div>
-          <footer class="panel-foot clearfix">
-            
-              
-      
-          <a href="/tags/对象/" class="tag bg-main padding-small">对象</a>
-      
-
-          </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article class="margin" itemscope itemprop="blogPost">
-  
-  <ul class="bread bg-green bg-inverse" style="margin-bottom:0px;border-radius:0px">
-    
-    <li><a  href="/categories/JavaScript/">JavaScript</a></li>
-  </ul>
-  
-  <div class="panel" style="border-radius:0px">
-    
-      
-        <header class="panel-head">
-          
-  
-    <h3 itemprop="name">
-      <a  href="/2023/02/21/JavaScript%E4%B8%AD%E6%95%B0%E7%BB%84%E7%9A%8430%E7%A7%8D%E6%96%B9%E6%B3%95/">JavaScript中数组的使用及方法</a>
+      JavaScript中数组的使用及方法
     </h3>
   
 
@@ -611,129 +430,28 @@
           </footer>
   </div>
   
-</article>
-
-
-  
-    <article class="margin" itemscope itemprop="blogPost">
-  
-  <ul class="bread bg-green bg-inverse" style="margin-bottom:0px;border-radius:0px">
     
-    <li><a  href="/categories/JavaScript/">JavaScript</a></li>
+  <ul class="pager margin clearfix border-main">
+    
+      <li class="float-left">
+        <a href="/2023/02/21/js%E4%B8%AD%E9%81%8D%E5%8E%86%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%87%A0%E7%A7%8D%E6%96%B9%E5%BC%8F/">
+            
+              js中遍历对象的几种方式
+                
+        </a>
+      </li>
+      
+        
+          <li class="float-right">
+            <a href="/2023/02/21/JavaScript%E4%B8%ADthis%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98/">
+                JavaScript中this指向问题
+            </a>
+          </li>
+          
   </ul>
   
-  <div class="panel" style="border-radius:0px">
-    
       
-        <header class="panel-head">
-          
-  
-    <h3 itemprop="name">
-      <a  href="/2023/02/21/JavaScript%E4%B8%ADthis%E6%8C%87%E5%90%91%E9%97%AE%E9%A2%98/">JavaScript中this指向问题</a>
-    </h3>
-  
-
-        </header>
-        
-          <div class="panel-body" itemprop="articleBody">
-            
-                      <div class="entry">
-                        <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p>面向对象语言中 this 表示当前对象的一个引用,但在 JavaScript 中 this 不是固定不变的，它会随着执行环境的改变而改变。</p>
-<h3 id="1-全局作用域或者普通函数中-this-指向全局对象-window"><a href="#1-全局作用域或者普通函数中-this-指向全局对象-window" class="headerlink" title="1. 全局作用域或者普通函数中 this 指向全局对象 window"></a>1. 全局作用域或者普通函数中 this 指向全局对象 window</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">//直接打印</span><br><span class="line">var a = 10;</span><br><span class="line">console.log(this.a)</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>10</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//function声明函数</span><br><span class="line">var a = 10;</span><br><span class="line">function bar() &#123;</span><br><span class="line">  var a = 20</span><br><span class="line">  console.log(this.a);</span><br><span class="line">&#125;</span><br><span class="line">bar();</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>10</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//function声明函数赋给变量</span><br><span class="line">var a = 10;</span><br><span class="line">var bar = function () &#123;</span><br><span class="line">  var a = 20;</span><br><span class="line">  console.log(this.a);</span><br><span class="line">&#125;;</span><br><span class="line">bar();</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>10</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//立即执行函数</span><br><span class="line">var a = 10;</span><br><span class="line">(function () &#123;</span><br><span class="line">  var a = 20;</span><br><span class="line">  console.log(this.a);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>10</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//定时器方法</span><br><span class="line">var a = 10;</span><br><span class="line">setInterval(function () &#123;</span><br><span class="line">    var a = 20</span><br><span class="line">  console.log(this.a);</span><br><span class="line">&#125;, 2000);</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>10</p>
-</blockquote>
-<h3 id="2-方法调用中谁调用-this-指向谁"><a href="#2-方法调用中谁调用-this-指向谁" class="headerlink" title="2. 方法调用中谁调用 this 指向谁"></a>2. 方法调用中谁调用 this 指向谁</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//对象方法调用</span><br><span class="line">var a = 10;</span><br><span class="line">var person = &#123;</span><br><span class="line">  a: 20,</span><br><span class="line">  run: function () &#123;</span><br><span class="line">    console.log(this.a);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line">person.run();</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>20</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 事件绑定 --&gt;</span><br><span class="line">&lt;button type=&quot;button&quot;&gt;点我&lt;/button&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  var btn = document.querySelector(&quot;button&quot;);</span><br><span class="line">  btn.onclick = function () &#123;</span><br><span class="line">    console.log(this);</span><br><span class="line">  &#125;;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>&lt; button button button type&#x3D;”button”&gt;点我 &lt; &#x2F;button&gt;</p>
-</blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 事件监听 --&gt;</span><br><span class="line">&lt;button type=&quot;button&quot;&gt;点我&lt;/button&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">  var btn = document.querySelector(&quot;button&quot;);</span><br><span class="line">  btn.addEventListener(&quot;click&quot;, function () &#123;</span><br><span class="line">    console.log(this);</span><br><span class="line">  &#125;);</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>&lt; button button button type&#x3D;”button”&gt;点我 &lt; &#x2F;button&gt;</p>
-</blockquote>
-<h3 id="3-在构造函数或者构造函数原型对象中-this-指向构造函数的实例"><a href="#3-在构造函数或者构造函数原型对象中-this-指向构造函数的实例" class="headerlink" title="3. 在构造函数或者构造函数原型对象中 this 指向构造函数的实例"></a>3. 在构造函数或者构造函数原型对象中 this 指向构造函数的实例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//不使用new指向window</span><br><span class="line">function Person(name) &#123;</span><br><span class="line">  console.log(this)     // window</span><br><span class="line">  this.name = name;</span><br><span class="line">&#125;</span><br><span class="line">Person(&#x27;inwe&#x27;)</span><br><span class="line">//使用new</span><br><span class="line">function Person(name) &#123;</span><br><span class="line">  this.name = name</span><br><span class="line">  console.log(this)     //people</span><br><span class="line">  self = this</span><br><span class="line">&#125;</span><br><span class="line">var people = new Person(&#x27;iwen&#x27;)</span><br><span class="line">console.log(self === people)       //true</span><br><span class="line">//这里new改变了this指向，将this由window指向Person的实例对象people</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>window<br>people<br>true</p>
-</blockquote>
-<h3 id="4-箭头函数中指向外层作用域的-this"><a href="#4-箭头函数中指向外层作用域的-this" class="headerlink" title="4. 箭头函数中指向外层作用域的 this"></a>4. 箭头函数中指向外层作用域的 this</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;</span><br><span class="line">  foo() &#123;</span><br><span class="line">    console.log(this);</span><br><span class="line">  &#125;,</span><br><span class="line">  bar: () =&gt; &#123;</span><br><span class="line">    console.log(this);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">obj.foo()    // &#123;foo: ƒ, bar: ƒ&#125;</span><br><span class="line">obj.bar()    // window</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>{foo: ƒ, bar: ƒ}<br>window</p>
-</blockquote>
-
-                      </div>
-                      
-                      <!-- <div id="cyReward" class="text-center margin-top" role="cylabs" data-use="reward"></div> -->
-                        
-          </div>
-          <footer class="panel-foot clearfix">
-            
-              
-      
-          <a href="/tags/this/" class="tag bg-main padding-small">this</a>
-      
-
-          </footer>
-  </div>
-  
 </article>
-
-
-  
-    <article class="margin" itemscope itemprop="blogPost">
-  
-  <div class="panel" style="border-radius:0px">
-    
-      
-        <header class="panel-head">
-          
-  
-    <h3 itemprop="name">
-      <a  href="/2023/02/18/hello-world/">HOME</a>
-    </h3>
-  
-
-        </header>
-        
-          <div class="panel-body" itemprop="articleBody">
-            
-                      <div class="entry">
-                        
-                      </div>
-                      
-                      <!-- <div id="cyReward" class="text-center margin-top" role="cylabs" data-use="reward"></div> -->
-                        
-          </div>
-          <footer class="panel-foot clearfix">
-            
-              
-          </footer>
-  </div>
-  
-</article>
-
-
-  
-
 
 
             </section>
