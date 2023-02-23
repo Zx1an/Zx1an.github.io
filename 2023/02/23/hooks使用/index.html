@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  
+  <title>hooks使用 | Zx1an博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前言hooks是 16.8 版本之后的新特性，React 团队希望，组件不要变成复杂的容器，最好只是数据流的管道。开发者根据需要，组合管道即可。 组件的最佳写法应该是函数，而不是类。React 早就支持函数组件，但是，这种写法有重大限制，必须是纯函数，不能包含状态，也不支持生命周期方法，因此无法取代类。React Hooks 的设计目的，就是加强版函数组件，完全不使用”类”，就能写出一个全功能的组">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hooks使用">
+<meta property="og:url" content="http://example.com/2023/02/23/hooks%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="Zx1an博客">
+<meta property="og:description" content="前言hooks是 16.8 版本之后的新特性，React 团队希望，组件不要变成复杂的容器，最好只是数据流的管道。开发者根据需要，组合管道即可。 组件的最佳写法应该是函数，而不是类。React 早就支持函数组件，但是，这种写法有重大限制，必须是纯函数，不能包含状态，也不支持生命周期方法，因此无法取代类。React Hooks 的设计目的，就是加强版函数组件，完全不使用”类”，就能写出一个全功能的组">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-02-23T05:32:44.736Z">
+<meta property="article:modified_time" content="2022-08-26T00:59:32.000Z">
+<meta property="article:author" content="zhuxiang">
+<meta property="article:tag" content="hooks">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Zx1an博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/pintuer.css">
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+<script src="/js/jquery.js"></script>
+
+  
+<script src="/js/pintuer.js"></script>
+
+  
+
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+  <body>
+    <div class="layout">
+      <div class="container padding-big-top padding-big-bottom bg-white">
+  <div class="line">
+    <div class="xl12 xs2 xm2 xb1">
+      <button class="button icon-navicon float-right" data-target="#header-demo2">
+      </button>
+      <img src="/favicon.png" width="50" height="50" />
+    </div>
+    <div class=" xl12 xs10 xm10 xb11 padding-top nav-navicon" id="header-demo2">
+      <div class="xs8 xm8 xb8">
+        <ul class="nav nav-menu nav-inline">
+          
+            <li>
+              <a href="/" class="text-big">
+                <strong>主页</strong>
+              </a>
+            </li>
+            
+            <li>
+              <a href="/archives" class="text-big">
+                <strong>归档</strong>
+              </a>
+            </li>
+            
+              <!-- 
+                      <li><a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a></li>
+                     -->
+        </ul>
+      </div>
+      <div class="xs4 xm4 xb3">
+        <form>
+          <div class="input-group padding-little-top">
+            <input type="text" class="input border-main" name="keywords" size="30" placeholder="关键词" />
+            <span class="addbtn">
+              <button id="search_dialog" type="button" class="button bg-main dialogs" data-toggle="click" data-target="#mydialog" data-mask="1" data-width="50%">
+                搜索</button>
+            </span>
+          </div>  
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+        <div class="keypoint bg-green bg-inverse text-center">
+          <h1>
+            在行中知,在知中行,知行合一</h1>
+          <p>
+              嗨，我是朱祥，一名自学 web 的开发者。正在修行，探求创意之源。</p>
+         
+        </div>
+        <div class="line-big">
+          <div class="xs9">
+            <section class="margin">
+              <article class="margin" itemscope itemprop="blogPost">
+  
+  <ul class="bread bg-green bg-inverse" style="margin-bottom:0px;border-radius:0px">
+    
+    <li><a  href="/categories/React/">React</a></li>
+  </ul>
+  
+  <div class="panel" style="border-radius:0px">
+    
+      
+        <header class="panel-head">
+          
+  
+    <h3 itemprop="name">
+      hooks使用
+    </h3>
+  
+
+        </header>
+        
+          <div class="panel-body" itemprop="articleBody">
+            
+                      <div class="entry">
+                        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>hooks是 16.8 版本之后的新特性，React 团队希望，组件不要变成复杂的容器，最好只是数据流的管道。开发者根据需要，组合管道即可。 组件的最佳写法应该是函数，而不是类。<br>React 早就支持函数组件，<br>但是，这种写法有重大限制，必须是纯函数，不能包含状态，也不支持生命周期方法，因此无法取代类。<br>React Hooks 的设计目的，就是加强版函数组件，完全不使用”类”，就能写出一个全功能的组件。<br>Hooks可以让无状态组件实现有状态组件的部分功能，比如设置state，使用钩子函数</p>
+<h2 id="useState-状态"><a href="#useState-状态" class="headerlink" title="useState - 状态"></a>useState - 状态</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Fragment, useState &#125; from &#x27;react&#x27;;</span><br><span class="line">const HooksCompont = () =&gt; &#123;</span><br><span class="line">  const [count, setCount] = useState(0);</span><br><span class="line">  return (</span><br><span class="line">    &lt;Fragment&gt;</span><br><span class="line">      &lt;h3&gt;hello hooks!! &#123;count&#125;&lt;/h3&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; setCount(count + 1)&#125;&gt;加&lt;/button&gt;</span><br><span class="line">    &lt;/Fragment&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line">export default HooksCompont;</span><br></pre></td></tr></table></figure>
+<h2 id="useEffect-副作用"><a href="#useEffect-副作用" class="headerlink" title="useEffect - 副作用"></a>useEffect - 副作用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Fragment, useState, useEffect &#125; from &#x27;react&#x27;;</span><br><span class="line">const HooksCompont = () =&gt; &#123;</span><br><span class="line">  const [count, setCount] = useState(0);</span><br><span class="line">  const [disable, setDisable] = useState(true);</span><br><span class="line">  // useEffect 相当于 conmponentDidMout,conmponentDidUpdate和 conmponentWillUnmount</span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    console.log(count, &#x27;页面挂载&#x27;);</span><br><span class="line">    if (count === 2) &#123;</span><br><span class="line">      console.log(count, &#x27;变化&#x27;);</span><br><span class="line">    &#125;</span><br><span class="line">    return () =&gt; &#123;</span><br><span class="line">      // 这里相当于conmponentWillUnmount (页面离开时)</span><br><span class="line">      // 但是如果 第二参数值 发生改变时，触发副作用函数，并且执行里面逻辑</span><br><span class="line">      console.log(&#x27;执行离开&#x27;);</span><br><span class="line">    &#125;;</span><br><span class="line">    // 当 useEffect 未添加第二个参数时 ：页面每次重新渲染(任意点击按钮),都要执行一遍这些副作用函数，显然是不经济的。</span><br><span class="line">    // 怎么跳过一些不必要的计算呢？我们需要给 useEffect 传第二个参数即可。</span><br><span class="line">    // 用第二个参数来告诉 react只有当  这个参数的值 发生改变时，才执行我们传的副作用函数（第一个参数）。</span><br><span class="line">  &#125;, [count]);</span><br><span class="line"></span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    return () =&gt; &#123;</span><br><span class="line">      // 这里相当于conmponentWillUnmount (页面离开时)</span><br><span class="line">      console.log(&#x27;离开&#x27;);</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;, []);</span><br><span class="line">  return (</span><br><span class="line">    &lt;Fragment&gt;</span><br><span class="line">      &lt;h3&gt;hello hooks!! &#123;count&#125;&lt;/h3&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; setCount(count + 1)&#125;&gt;加&lt;/button&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; setDisable(!disable)&#125;&gt;&#123;disable ? &#x27;启用&#x27; : &#x27;禁用&#x27;&#125;&lt;/button&gt;</span><br><span class="line">    &lt;/Fragment&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line">export default HooksCompont;</span><br></pre></td></tr></table></figure>
+<h2 id="userReducer-复杂状态处理"><a href="#userReducer-复杂状态处理" class="headerlink" title="userReducer - 复杂状态处理"></a>userReducer - 复杂状态处理</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Fragment, useReducer &#125; from &#x27;react&#x27;;</span><br><span class="line">const ReducerDemo = () =&gt; &#123;</span><br><span class="line">  const initialState = &#123; count: 0, name: &#x27;鸣人&#x27; &#125;;</span><br><span class="line">  const reducer = (state, action) =&gt; &#123;</span><br><span class="line">    const &#123; type, payload = 1 &#125; = action;</span><br><span class="line">    switch (type) &#123;</span><br><span class="line">      case &#x27;increment&#x27;:</span><br><span class="line">        return &#123; ...state, count: state.count + payload &#125;;</span><br><span class="line">      case &#x27;decrement&#x27;:</span><br><span class="line">        return &#123; ...state, count: state.count - payload &#125;;</span><br><span class="line">      case &#x27;rename&#x27;:</span><br><span class="line">        return &#123; ...state, name: payload &#125;;</span><br><span class="line">      default:</span><br><span class="line">        throw new Error();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line">  // 第一位参数是函数, 第二参数为初始值</span><br><span class="line">  // useReducer((state, action)=&gt;&#123;&#125;, 0)</span><br><span class="line">  // const [state, dispatch] = useReducer(reducer, initialArg);</span><br><span class="line">  const [state, dispatch] = useReducer(reducer, initialState);</span><br><span class="line">  return (</span><br><span class="line">    &lt;Fragment&gt;</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        useReducer &#123;state.count&#125; ---- &#123;state.name&#125;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; dispatch(&#123; type: &#x27;increment&#x27; &#125;)&#125;&gt;加&lt;/button&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; dispatch(&#123; type: &#x27;decrement&#x27;, payload: 2 &#125;)&#125;&gt;减&lt;/button&gt;</span><br><span class="line">      &lt;button onClick=&#123;() =&gt; dispatch(&#123; type: &#x27;rename&#x27;, payload: &#x27;佐助&#x27; &#125;)&#125;&gt;changeName&lt;/button&gt;</span><br><span class="line">    &lt;/Fragment&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line">export default ReducerDemo;</span><br></pre></td></tr></table></figure>
+<h2 id="useContext-深层值传递"><a href="#useContext-深层值传递" class="headerlink" title="useContext - 深层值传递"></a>useContext - 深层值传递</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Fragment, useState, createContext, useContext &#125; from &#x27;react&#x27;;</span><br><span class="line"></span><br><span class="line">// 创建 Context</span><br><span class="line">const theme = createContext(&#x27;#fff&#x27;);</span><br><span class="line"></span><br><span class="line">const Demo = () =&gt; &#123;</span><br><span class="line">  return &lt;Child /&gt;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const Child = () =&gt; &#123;</span><br><span class="line">  const father = useContext(theme);</span><br><span class="line">  const style = &#123;</span><br><span class="line">    backgroundColor: father.bgColor,</span><br><span class="line">  &#125;;</span><br><span class="line">  return (</span><br><span class="line">    // 消费者</span><br><span class="line">    &lt;Fragment&gt;</span><br><span class="line">      &#123;/* 第一种写法 */&#125;</span><br><span class="line">      &lt;div style=&#123;style&#125;&gt;&#123;father.content&#125;&lt;/div&gt;</span><br><span class="line">      &#123;/* 第二种 使用 Consumer 属性 */&#125;</span><br><span class="line">      &lt;theme.Consumer&gt;&#123;(value) =&gt; &lt;div&gt;&#123;value.bgColor&#125;&lt;/div&gt;&#125;&lt;/theme.Consumer&gt;</span><br><span class="line">    &lt;/Fragment&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">const HooksContext = () =&gt; &#123;</span><br><span class="line">  // 深层值传递相当于 生产者 和 消费者模式</span><br><span class="line">  const [bgColor, setBgColor] = useState(&#x27;#fff&#x27;);</span><br><span class="line">  return (</span><br><span class="line">    &lt;Fragment&gt;</span><br><span class="line">      &lt;input</span><br><span class="line">        type=&quot;color&quot;</span><br><span class="line">        onChange=&#123;(e) =&gt; &#123;</span><br><span class="line">          setBgColor(e.target.value);</span><br><span class="line">        &#125;&#125;</span><br><span class="line">      /&gt;</span><br><span class="line">      &#123;/* 生产者 */&#125;</span><br><span class="line">      &lt;theme.Provider value=&#123;&#123; bgColor, content: &#x27;Child&#x27; &#125;&#125;&gt;</span><br><span class="line">        &lt;Demo /&gt;</span><br><span class="line">      &lt;/theme.Provider&gt;</span><br><span class="line">    &lt;/Fragment&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line">export default HooksContext;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="useRef-引用"><a href="#useRef-引用" class="headerlink" title="useRef - 引用"></a>useRef - 引用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Fragment, useEffect, useRef, forwardRef &#125; from &#x27;react&#x27;;</span><br><span class="line"></span><br><span class="line">const Input = forwardRef((prpos, ref) =&gt; &#123;</span><br><span class="line">  // 将ref父类的ref作为参数传入函数式组件中，本身props只带有children这个参数，这样可以让子类转发父类的ref,</span><br><span class="line">  // 当父类把ref挂在到子组件上时，子组件外部通过forwrardRef包裹，可以直接将父组件创建的ref挂在到子组件的某个dom元素</span><br><span class="line">  return &lt;input &#123;...prpos&#125; ref=&#123;ref&#125; /&gt;;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">const RefDemo = () =&gt; &#123;</span><br><span class="line">  // 用于获取元素的原生DOM或者获取自定义组件所暴露出来的ref方法(父组件可以通过ref获取子组件，并调用相对应子组件中的方法)</span><br><span class="line">  const inputRef = useRef();</span><br><span class="line">  useEffect(() =&gt; &#123;</span><br><span class="line">    inputRef.current.focus();</span><br><span class="line">    inputRef.current.value = &#x27;hello react&#x27;;</span><br><span class="line">  &#125;, []);</span><br><span class="line">  return (</span><br><span class="line">    &lt;Fragment&gt;</span><br><span class="line">      &lt;Input placeholder=&quot;请输入&quot; ref=&#123;inputRef&#125; /&gt;</span><br><span class="line">    &lt;/Fragment&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line">export default RefDemo;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="useMemo"><a href="#useMemo" class="headerlink" title="useMemo"></a>useMemo</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">import React, &#123; Fragment, useState, useMemo &#125; from &#x27;react&#x27;;</span><br><span class="line"></span><br><span class="line">const Child = (&#123; name, children &#125;) =&gt; &#123;</span><br><span class="line">  const change = () =&gt; &#123;</span><br><span class="line">    // 要求点击 鸣人 才执行此语句    现点击任何按钮都会执行 导致子组件重新渲染</span><br><span class="line">    // 原因 : 父组件任何一个状态发生变化，子组件的代码块都会重新执行一遍</span><br><span class="line">    window.console.log(&#x27;鸣人分身&#x27;);</span><br><span class="line">    return name;</span><br><span class="line">  &#125;;</span><br><span class="line">  //  useMemo 是在DOM更新前触发的</span><br><span class="line">  const actionChange = useMemo(()=&gt;change(),[name]);</span><br><span class="line">  return (</span><br><span class="line">    &lt;Fragment&gt;</span><br><span class="line">      &lt;div&gt;&#123;actionChange&#125;&lt;/div&gt;</span><br><span class="line">      &lt;div&gt;&#123;children&#125;&lt;/div&gt;</span><br><span class="line">    &lt;/Fragment&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line">const Demo = () =&gt; &#123;</span><br><span class="line">  const [mingren, setMingren] = useState(&#x27;鸣人&#x27;);</span><br><span class="line">  const [zuozhu, setZuozhu] = useState(&#x27;佐助&#x27;);</span><br><span class="line">  return (</span><br><span class="line">    &lt;Fragment&gt;</span><br><span class="line">      &lt;button</span><br><span class="line">        onClick=&#123;() =&gt; &#123;</span><br><span class="line">          setMingren(mingren + 1);</span><br><span class="line">        &#125;&#125;</span><br><span class="line">      &gt;</span><br><span class="line">        鸣人</span><br><span class="line">      &lt;/button&gt;</span><br><span class="line">      &lt;button</span><br><span class="line">        onClick=&#123;() =&gt; &#123;</span><br><span class="line">          setZuozhu(zuozhu + 2);</span><br><span class="line">        &#125;&#125;</span><br><span class="line">      &gt;</span><br><span class="line">        佐助</span><br><span class="line">      &lt;/button&gt;</span><br><span class="line">      &lt;Child name=&#123;mingren&#125;&gt;&#123;zuozhu&#125;&lt;/Child&gt;</span><br><span class="line">    &lt;/Fragment&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line">export default Demo;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="轮播图案例"><a href="#轮播图案例" class="headerlink" title="轮播图案例"></a>轮播图案例</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//轮播图数据源</span><br><span class="line">import React from &#x27;react&#x27;</span><br><span class="line">import Swiper from &#x27;../../components/swiper&#x27;</span><br><span class="line">class App extends React.Component &#123;</span><br><span class="line">    constructor() &#123;</span><br><span class="line">        super();</span><br><span class="line">        this.state = &#123;</span><br><span class="line">            images: [</span><br><span class="line">                &#123; src: require(&quot;../../assets/images/banner1.jpg&quot;), url:&quot;https://baidu.com&quot;&#125;,</span><br><span class="line">                &#123; src: require(&quot;../../assets/images/banner2.jpg&quot;), url:&quot;https://baidu.com&quot;&#125;,</span><br><span class="line">                &#123; src: require(&quot;../../assets/images/banner3.jpg&quot;), url:&quot;https://baidu.com&quot;&#125;,</span><br><span class="line">                &#123; src: require(&quot;../../assets/images/banner3.jpg&quot;), url:&quot;https://baidu.com&quot;&#125;,</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    render() &#123;</span><br><span class="line">        return (</span><br><span class="line">            &lt;React.Fragment&gt;</span><br><span class="line">                &lt;Swiper data=&#123;this.state.images&#125; /&gt;</span><br><span class="line">            &lt;/React.Fragment&gt;</span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">export default App;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">//轮播图UI</span><br><span class="line">import React from &#x27;react&#x27;</span><br><span class="line">import Hoc from &#x27;./hoc&#x27;</span><br><span class="line">import &quot;./style.css&quot;</span><br><span class="line">export default Hoc((props) =&gt; &#123;</span><br><span class="line">    return (</span><br><span class="line">        &lt;div className=&quot;banner&quot;&gt;</span><br><span class="line">            &lt;div className=&quot;my-swiper-main&quot; onMouseOver=&#123;props.stop&#125; onMouseOut=&#123;props.autoPlay&#125;&gt;</span><br><span class="line">                &#123;</span><br><span class="line">                    props.data.length &gt; 0 &amp;&amp; props.data.map((item, index) =&gt; &#123;</span><br><span class="line">                        return (</span><br><span class="line">                            &lt;div className=&#123;item.active ? &quot;my-slide show&quot; : &quot;my-slide&quot;&#125; key=&#123;index&#125;&gt;</span><br><span class="line">                                &lt;a href=&#123;item.url&#125; target=&quot;_blank&quot; rel=&quot;noopener noreferrer&quot;&gt;</span><br><span class="line">                                    &lt;img src=&#123;item.src&#125; alt=&quot;&quot; /&gt;</span><br><span class="line">                                &lt;/a&gt;</span><br><span class="line">                            &lt;/div&gt;</span><br><span class="line">                        )</span><br><span class="line">                    &#125;)</span><br><span class="line">                &#125;</span><br><span class="line">                &lt;div className=&quot;pagination&quot;&gt;</span><br><span class="line">                    &#123;</span><br><span class="line">                        props.data.length &gt; 0 &amp;&amp; props.data.map((item, index) =&gt; &#123;</span><br><span class="line">                            return (</span><br><span class="line">                                &lt;div className=&#123;item.active ? &quot;dot active&quot; : &quot;dot&quot;&#125; key=&#123;index&#125; onClick=&#123;() =&gt; &#123; props.change(index) &#125;&#125;&gt;&lt;/div&gt;</span><br><span class="line">                            )</span><br><span class="line">                        &#125;)</span><br><span class="line">                    &#125;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    )</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">//轮播图逻辑</span><br><span class="line">import React, &#123; useState, useEffect, useRef, useCallback &#125; from &#x27;react&#x27;;</span><br><span class="line">export default function Hoc(WithCompont) &#123;</span><br><span class="line">    return function HocCompont(props) &#123;</span><br><span class="line">        let [data, setData] = useState([]);</span><br><span class="line">        let [isInit, setIsInit] = useState(true)</span><br><span class="line">        let [iIndex, setIIndex] = useState(0)</span><br><span class="line">        // 创建一个表示，通用容器，专门解决 setInterval</span><br><span class="line">        let timer = useRef(null);</span><br><span class="line"></span><br><span class="line">        function change(index) &#123;       //点击切换图片</span><br><span class="line">            setIIndex(index)</span><br><span class="line">            if (data.length &gt; 0) &#123;</span><br><span class="line">                for (let i = 0; i &lt; data.length; i++) &#123;</span><br><span class="line">                    if (data[i].active) &#123;</span><br><span class="line">                        data[i].active = false;</span><br><span class="line">                        break;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            data[index].active = true;</span><br><span class="line">            setData(data)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        const autoPlay = useCallback(() =&gt; &#123;      //自动播放</span><br><span class="line">            clearInterval(timer.current)</span><br><span class="line">            timer.current = setInterval(() =&gt; &#123;</span><br><span class="line">                let tmpIndex = iIndex;</span><br><span class="line">                if (data.length &gt; 0 &amp;&amp; data) &#123;</span><br><span class="line">                    for (let i = 0; i &lt; data.length; i++) &#123;</span><br><span class="line">                        if (data[i].active) &#123;</span><br><span class="line">                            data[i].active = false;</span><br><span class="line">                            break;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                    if (tmpIndex &gt;= data.length - 1) &#123;</span><br><span class="line">                        tmpIndex = 0;</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        tmpIndex++</span><br><span class="line">                    &#125;</span><br><span class="line">                    data[tmpIndex].active = true;</span><br><span class="line">                    setIIndex(tmpIndex)</span><br><span class="line">                    setData(data)</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125;, (3000))</span><br><span class="line">        &#125;, [data, iIndex])  //  useState 中用到的值需要放在 第二个参数中</span><br><span class="line">        </span><br><span class="line">        function stop() &#123;     //鼠标经过清除定时器</span><br><span class="line">            clearInterval(timer.current)   </span><br><span class="line">        &#125;</span><br><span class="line">        useEffect(() =&gt; &#123;</span><br><span class="line">            if (props.data &amp;&amp; props.data.length &gt; 0 &amp;&amp; isInit) &#123;</span><br><span class="line">                setIsInit(false);</span><br><span class="line">                for (let i = 0; i &lt; props.data.length; i++) &#123;</span><br><span class="line">                    if (i === 0) &#123;</span><br><span class="line">                        props.data[i].active = true;</span><br><span class="line">                    &#125; else &#123;</span><br><span class="line">                        props.data[i].active = false</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">                setData(props.data); //将默认的空数组等于 props.data</span><br><span class="line">            &#125;</span><br><span class="line">            autoPlay();</span><br><span class="line">            return () =&gt; &#123;    //页面离开清除定时器 (页面离开时执行)</span><br><span class="line">                clearInterval(timer.current)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;, [props.data, isInit, autoPlay]);</span><br><span class="line">        let newsPros = &#123;</span><br><span class="line">            change: change,</span><br><span class="line">            data: data,</span><br><span class="line">            stop: stop,</span><br><span class="line">            autoPlay: autoPlay,</span><br><span class="line">        &#125;</span><br><span class="line">        return (</span><br><span class="line">            // &lt;WithCompont &#123;...props&#125; data=&#123;data&#125; change=&#123;change&#125; stop=&#123;stop&#125;&gt;&lt;/WithCompont&gt;</span><br><span class="line">            &lt;WithCompont &#123;...props&#125; &#123;...newsPros&#125;&gt;&lt;/WithCompont&gt;</span><br><span class="line"></span><br><span class="line">        )</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+                      </div>
+                      
+                      <!-- <div id="cyReward" class="text-center margin-top" role="cylabs" data-use="reward"></div> -->
+                        
+          </div>
+          <footer class="panel-foot clearfix">
+            
+              
+      
+          <a href="/tags/hooks/" class="tag bg-main padding-small">hooks</a>
+      
+
+          </footer>
+  </div>
+  
+    
+  <ul class="pager margin clearfix border-main">
+    
+      <li class="float-left">
+        <a href="/2023/02/23/npm%E5%88%9D%E5%A7%8B%E5%8C%96%E6%88%96%E5%AE%89%E8%A3%85%E6%A8%A1%E5%9D%97%E6%97%B6%EF%BC%8C%E6%8A%A5%E9%94%99/">
+            
+              npm初始化或安装模块报错
+                
+        </a>
+      </li>
+      
+        
+          <li class="float-right">
+            <a href="/2023/02/23/bind,call,apply%E4%B8%89%E8%80%85%E4%B9%8B%E9%97%B4%E7%9A%84%E5%8C%BA%E5%88%AB%E5%8F%8A%E4%BD%9C%E7%94%A8/">
+                call apply bind三者之间的区别及作用
+            </a>
+          </li>
+          
+  </ul>
+  
+      
+</article>
+
+
+            </section>
+          </div>
+          <div class="xs3">
+            
+              <aside id="sidebar">
+  
+    
+  <div class="panel margin-right margin-top">
+    <div class="panel-head bg-main">分类</div>
+    <div class="panel-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CSS/">CSS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Git/">Git</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/JavaScript/">JavaScript</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Markdown/">Markdown</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/React/">React</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Vue/">Vue</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/npm/">npm</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="panel margin-right margin-top">
+    <div class="panel-head bg-main">标签</div>
+    <div class="list-link" style="border-radius:0px;">
+        
+          <a href="/tags/Markdown/">Markdown<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/React/">React<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/React%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/">React创建组件<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/React%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC/">React组件传值<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/apply/">apply<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/axios/">axios<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/bind/">bind<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/call/">call<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/git%E5%91%BD%E4%BB%A4/">git命令<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/hooks/">hooks<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/npm/">npm<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/props/">props<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/react-router/">react-router<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/redux/">redux<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/state/">state<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/this/">this<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/vue/">vue<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/%E5%89%8D%E7%AB%AF/">前端<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A/">双向绑定<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%B8%83%E5%B1%80/">响应式布局<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/%E5%AF%B9%E8%B1%A1/">对象<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/">小程序<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/%E6%95%B0%E7%BB%84/">数组<span class="float-right badge bg-main">2</span></a>
+        
+          <a href="/tags/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/">数组去重<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1/">数组对象<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/%E6%B5%85%E6%8B%B7%E8%B4%9D/">浅拷贝<span class="float-right badge bg-main">1</span></a>
+        
+          <a href="/tags/%E6%B7%B1%E6%8B%B7%E8%B4%9D/">深拷贝<span class="float-right badge bg-main">1</span></a>
+        
+    </div>
+  </div>
+
+
+  
+    
+  <div class="panel margin-right margin-top">
+    <div class="panel-head bg-main">标签云</div>
+    <div class="panel-body">
+      <a href="/tags/Markdown/" style="font-size: 10px;">Markdown</a> <a href="/tags/React/" style="font-size: 10px;">React</a> <a href="/tags/React%E5%88%9B%E5%BB%BA%E7%BB%84%E4%BB%B6/" style="font-size: 10px;">React创建组件</a> <a href="/tags/React%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC/" style="font-size: 10px;">React组件传值</a> <a href="/tags/apply/" style="font-size: 10px;">apply</a> <a href="/tags/axios/" style="font-size: 10px;">axios</a> <a href="/tags/bind/" style="font-size: 10px;">bind</a> <a href="/tags/call/" style="font-size: 10px;">call</a> <a href="/tags/git%E5%91%BD%E4%BB%A4/" style="font-size: 10px;">git命令</a> <a href="/tags/hooks/" style="font-size: 10px;">hooks</a> <a href="/tags/npm/" style="font-size: 10px;">npm</a> <a href="/tags/props/" style="font-size: 10px;">props</a> <a href="/tags/react-router/" style="font-size: 10px;">react-router</a> <a href="/tags/redux/" style="font-size: 10px;">redux</a> <a href="/tags/state/" style="font-size: 10px;">state</a> <a href="/tags/this/" style="font-size: 10px;">this</a> <a href="/tags/vue/" style="font-size: 10px;">vue</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 10px;">前端</a> <a href="/tags/%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A/" style="font-size: 10px;">双向绑定</a> <a href="/tags/%E5%93%8D%E5%BA%94%E5%BC%8F%E5%B8%83%E5%B1%80/" style="font-size: 10px;">响应式布局</a> <a href="/tags/%E5%AF%B9%E8%B1%A1/" style="font-size: 10px;">对象</a> <a href="/tags/%E5%B0%8F%E7%A8%8B%E5%BA%8F/" style="font-size: 10px;">小程序</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 20px;">数组</a> <a href="/tags/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" style="font-size: 10px;">数组去重</a> <a href="/tags/%E6%95%B0%E7%BB%84%E5%AF%B9%E8%B1%A1/" style="font-size: 10px;">数组对象</a> <a href="/tags/%E6%B5%85%E6%8B%B7%E8%B4%9D/" style="font-size: 10px;">浅拷贝</a> <a href="/tags/%E6%B7%B1%E6%8B%B7%E8%B4%9D/" style="font-size: 10px;">深拷贝</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="panel margin-right margin-top">
+    <div class="panel-head bg-main">归档</div>
+    <div class="panel-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">December 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/02/">February 2023</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="panel margin-right margin-top">
+    <div class="panel-head bg-main">最新文章</div>
+    <div class="list-link" style="border-radius:0px;">
+        
+            <a href="/2023/12/23/Markdown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95/">Markdown常用语法</a>
+        
+            <a href="/2023/02/23/React%E7%BB%84%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8/">React组件的使用</a>
+        
+            <a href="/2023/02/23/React%E4%B8%AD%E4%BD%BF%E7%94%A8axios%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82/">React中使用axios发送请求</a>
+        
+            <a href="/2023/02/23/React%E4%B8%AD%E5%AE%9E%E7%8E%B0%E6%95%B0%E6%8D%AE%E5%8F%8C%E5%90%91%E7%BB%91%E5%AE%9A/">React实现数据双向绑定</a>
+        
+            <a href="/2023/02/23/React%20redux%E7%9A%84%E4%BD%BF%E7%94%A8/">React redux的使用</a>
+        
+    </div>
+  </div>
+
+  
+</aside>
+                
+          </div>
+        </div>
+        <footer id="footer">
+  
+  <!-- <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 zhuxiang<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div> -->
+  <div class="container-layout bg-gray bg-inverse padding-big-top padding-big-bottom margin-top">
+    <div class="table-responsive padding hidden-l">
+        <ul class="nav nav-sitemap">
+            <li><a href="#">友情链接</a>
+                <ul>
+                    <li><a target="_blank" rel="noopener" href="https://react.docschina.org/">React</a></li>
+                    <li><a target="_blank" rel="noopener" href="https://ant.design/index-cn/">Ant Design中文网</a></li>
+                    <li><a target="_blank" rel="noopener" href="https://github.com/">GitHub</a></li>
+                </ul>
+            </li>
+            <li><a href="#">扫码加微信</a>
+                <img width="128" height="128" src="/images/weixin.png" class="img-border border-blue radius-big" />
+            </li>
+            <li><a href="#">联系方式</a> 
+                <ul>
+                    <li>QQ:2722748085</li>
+                    <li>微信:Hua_2huX1anG</li>
+                    <li>电话:15288405611</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="text-center">
+        博客所有者 朱祥 联系邮箱 <a target="_blank" rel="noopener" href="https://mail.qq.com/">2722748085@qq.com</a></div>
+</div>
+</footer>
+<script>
+    (function($) {
+        $(document).ready(function() {
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+            var $searchDialog = document.getElementById("search_dialog");
+            $searchDialog.addEventListener("click",function(){
+                // 搜索功能
+                var searchXml = "";
+                if (searchXml.length == 0) {
+                    searchXml = "search.xml";
+                }
+                var searchPath = "/" + searchXml;
+                initSearch(searchPath, 'search-input', 'search-result','search');
+            });
+            
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, input_id, content_id,search_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(input_id);
+                    var $search = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $search.addEventListener('click', function() {
+                        var str = '<ul class=\"list-group\">';
+                        var keywords = $input.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if ($input.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class='text-main'>" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='text-main'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class='text-main'>" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+    })(jQuery);
+</script>
+
+<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cytsiKqIU"></script>
+<!-- JiaThis Button BEGIN -->
+<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?type=left&amp;move=0" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+
+          <!-- <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">主页</a>
+  
+    <a href="/archives" class="mobile-nav-link">归档</a>
+  
+</nav>
+        
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+ -->
+    </div>
+  </body>
+
+  </html>
